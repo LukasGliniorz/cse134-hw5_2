@@ -22,13 +22,9 @@ function fetchWeatherData(callback) {
     // La Jolla
     const stationUrl = `https://api.weather.gov/points/32.842674,-117.257767`;
 
-    // New York
-    // const stationUrl = `https://api.weather.gov/points/40.7145,-74.0071`;
-    // Fetch the nearest station
     fetch(stationUrl)
     .then(response => response.json())
     .then(data => {
-        // With the station information, we get the forecast URL
         const forecastUrl = data.properties.forecastHourly;
         return fetch(forecastUrl);
     })
@@ -36,8 +32,6 @@ function fetchWeatherData(callback) {
     .then(data => {
         // The actual hourly forecast data
         const hourlyForecasts = data.properties.periods;
-
-        // We'll just use the first period for this example
         const currentForecast = hourlyForecasts[0];
 
         // Create an object with the data we need
@@ -54,7 +48,6 @@ function fetchWeatherData(callback) {
             humidity: currentForecast.relativeHumidity
         };
 
-        // Call the callback with the weather data
         callback(weatherData);
     })
     .catch(error => {
